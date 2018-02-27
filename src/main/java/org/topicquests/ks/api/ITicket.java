@@ -15,7 +15,7 @@
  */
 package org.topicquests.ks.api;
 
-import java.util.List;
+import java.util.*;
 
 public interface ITicket {
 	
