@@ -47,7 +47,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#setUserLocator(java.lang.String)
+	 * @see org.topicquests.ks.model.api.ITicket#setUserLocator(java.lang.String)
 	 */
 	@Override
 	public void setUserLocator(String locator) {
@@ -55,7 +55,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#getUserLocator()
+	 * @see org.topicquests.ks.model.api.ITicket#getUserLocator()
 	 */
 	@Override
 	public String getUserLocator() {
@@ -63,7 +63,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#addAvatarLocator(java.lang.String)
+	 * @see org.topicquests.ks.model.api.ITicket#addAvatarLocator(java.lang.String)
 	 */
 	@Override
 	public void addAvatarLocator(String avatar) {
@@ -78,7 +78,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#listAvatars()
+	 * @see org.topicquests.ks.model.api.ITicket#listAvatars()
 	 */
 	@Override
 	public List<String> listAvatars() {
@@ -89,7 +89,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#addGroupLocator(java.lang.String)
+	 * @see org.topicquests.ks.model.api.ITicket#addGroupLocator(java.lang.String)
 	 */
 	@Override
 	public void addGroupLocator(String groupLocator) {
@@ -103,7 +103,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#listGroupLocators()
+	 * @see org.topicquests.ks.model.api.ITicket#listGroupLocators()
 	 */
 	@Override
 	public List<String> listGroupLocators() {
@@ -114,7 +114,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#isAuthenticated()
+	 * @see org.topicquests.ks.model.api.ITicket#isAuthenticated()
 	 */
 	@Override
 	public boolean isAuthenticated() {
@@ -123,7 +123,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#isMember(java.lang.String)
+	 * @see org.topicquests.ks.model.api.ITicket#isMember(java.lang.String)
 	 */
 	@Override
 	public boolean isMember(String groupLocator) {
@@ -132,7 +132,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#setProperty(java.lang.String)
+	 * @see org.topicquests.ks.model.api.ITicket#setProperty(java.lang.String)
 	 */
 	@Override
 	public void setProperty(String key, Object value) {
@@ -140,7 +140,7 @@ public class TicketPojo implements ITicket {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.topicquests.model.api.ITicket#getProperty(java.lang.String)
+	 * @see org.topicquests.ks.model.api.ITicket#getProperty(java.lang.String)
 	 */
 	@Override
 	public Object getProperty(String key) {
