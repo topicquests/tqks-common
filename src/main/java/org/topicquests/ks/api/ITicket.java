@@ -123,4 +123,6 @@ public interface ITicket {
    * @return
    */
   boolean isMember(String groupLocator);
+
+  Map<String,Object> getData();
 }

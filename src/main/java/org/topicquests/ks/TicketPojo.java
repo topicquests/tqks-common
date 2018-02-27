@@ -226,4 +226,8 @@ public class TicketPojo implements ITicket {
     return data.get(key);
   }
 
+	public Map<String, Object> getData() {
+		return data;
+	}
+
 }
