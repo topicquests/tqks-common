@@ -5,7 +5,7 @@
     <artifactId>tqks-common</artifactId>
     <version>1.1.0</version>
     <packaging>jar</packaging>
-    <name>tq-support</name>
+    <name>tqks-common</name>
     <developers>
         <developer>
             <email>jackpark@topicquests.org</email>
@@ -22,7 +22,7 @@
     </developers>
     <organization>
         <name>TopicQuests Foundation</name>
-        <url>http://topicquests.org</url>
+        <url>http://www.topicquests.org</url>
     </organization>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -123,8 +123,8 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/topicquests/tq-support</url>
-        <connection>scm:git:git://github.com/topicquests/tq-support.git</connection>
+        <url>https://github.com/topicquests/tqks-common</url>
+        <connection>scm:git:git://github.com/topicquests/tqks-common.git</connection>
     </scm>
     <distributionManagement>
         <snapshotRepository>

@@ -16,6 +16,7 @@
 package org.topicquests.ks.api;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author park
@@ -38,6 +39,7 @@ public interface ITicket {
 	 * @param locator
 	 */
 	void setUserLocator(String locator);
+	
 	String getUserLocator();
 
 	/**
@@ -80,4 +82,6 @@ public interface ITicket {
 	 * @return
 	 */
 	boolean isMember(String groupLocator);
+	
+	Map<String,Object> getData();
 }
