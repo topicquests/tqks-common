@@ -9,7 +9,7 @@ COMMENT ON SCHEMA tq_authentication IS 'Tables to store topic quest users.';
 
 -- Install the pgcrypto extension.
 SET ROLE postgres;
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pgcrypto SCHEMA tq_authentication;
 
 SET ROLE tq_admin;
 
@@ -45,7 +45,7 @@ tq_authentication.encrypt_password() returns trigger
   as $$
 begin
   if tg_op = 'INSERT' or new.password <> old.password then
-    new.password = crypt(new.password, gen_salt('bf'));
+    new.password = tq_authentication.crypt(new.password, tq_authentication.gen_salt('bf'));
   end if;
   return new;
 end
