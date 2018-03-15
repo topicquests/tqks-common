@@ -13,11 +13,6 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto SCHEMA tq_authentication;
 
 SET ROLE tq_admin;
 
---
--- Create a locator type.
---
-CREATE DOMAIN locator VARCHAR(50) NOT NULL;
-
 CREATE TABLE IF NOT EXISTS
 tq_authentication.users (
   userid       locator UNIQUE,

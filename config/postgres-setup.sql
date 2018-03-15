@@ -43,6 +43,11 @@ CREATE DATABASE tq_database ENCODING UTF8;
 SET ROLE tq_admin;
 
 --
+-- Create a locator type.
+--
+CREATE DOMAIN locator VARCHAR(50) NOT NULL;
+
+--
 -- Create the audit log table.
 --
 \i audit.sql
