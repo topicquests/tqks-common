@@ -11,6 +11,7 @@ tq_contents.proxy (
   userid       locator references tq_authentication.users(userid),
   node_type    text,
   url          text,
+  version      text,
   is_virtual   boolean DEFAULT false,
   is_private   boolean DEFAULT false,
   is_live      boolean DEFAULT true,
