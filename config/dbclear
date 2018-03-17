@@ -6,7 +6,7 @@
 #
 
 # Remove the data from the Postgres topic map tables
-sudo -u postgres psql -a -f cleandb.sql template1
+psql -U tq_admin -W -h 127.0.0.1 -a -f cleandb.sql tq_database
 
 # Remove the data from Elasticsearch
 curl -XDELETE localhost:9200/topics

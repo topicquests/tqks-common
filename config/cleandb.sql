@@ -2,9 +2,6 @@
 -- Clean all data from the topic map tables.
 --
 
--- Switch to tq_database.
-\c tq_database
-
 SET ROLE tq_admin;
 
 DELETE FROM tq_contents.properties;
