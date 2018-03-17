@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#
+# Script to remove data from the PostgreSQL and Elasticsearch
+# data stores. For testing purposes only.
+#
+
+# Remove the data from the Postgres topic map tables
+sudo -u postgres psql -a -f cleandb.sql template1
+
+# Remove the data from Elasticsearch
+curl -XDELETE localhost:9200/topics
