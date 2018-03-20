@@ -8,14 +8,14 @@ GRANT USAGE ON schema tq_contents TO tq_proxy_ro;
 CREATE TABLE IF NOT EXISTS
 tq_contents.proxy (
   lox      		locator UNIQUE,
-  creatorId       locator references tq_authentication.users(userid),
+  crtr       locator references tq_authentication.users(userid),
   node_type    text,
   url          text,
   _ver      text,
   isVrt   boolean DEFAULT false,
   isPrv   boolean DEFAULT false,
   isLiv      boolean DEFAULT true,
-  PRIMARY KEY (proxyid, userid)
+  PRIMARY KEY (lox, crtr)
 );
 
 GRANT ALL PRIVILEGES ON tq_contents.proxy TO tq_proxy;
@@ -113,7 +113,7 @@ tq_contents.transitive_closure (
   tc_lox text
 );
 CREATE INDEX IF NOT EXISTS transitive_closure_idx
-  ON tq_contents.transitive_closure (proxyid, property_type);
+  ON tq_contents.transitive_closure (proxyid, tc_lox);
 
 GRANT ALL PRIVILEGES ON tq_contents.transitive_closure TO tq_proxy;
 GRANT SELECT ON tq_contents.transitive_closure TO tq_proxy_ro;
@@ -130,7 +130,7 @@ CREATE TRIGGER tablename_audit_proxy_transitive_closure
 --
 CREATE TABLE IF NOT EXISTS
 tq_contents.acls (
-  proxyid       locator NOT NULL references tq_contents.proxy(proxyid),
+  proxyid       locator NOT NULL references tq_contents.proxy(lox),
   acl           text
 );
 CREATE INDEX IF NOT EXISTS acls_idx
