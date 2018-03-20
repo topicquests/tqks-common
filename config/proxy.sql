@@ -7,14 +7,14 @@ GRANT USAGE ON schema tq_contents TO tq_proxy_ro;
 
 CREATE TABLE IF NOT EXISTS
 tq_contents.proxy (
-  proxyid      locator UNIQUE,
-  userid       locator references tq_authentication.users(userid),
+  lox      		locator UNIQUE,
+  creatorId       locator references tq_authentication.users(userid),
   node_type    text,
   url          text,
-  version      text,
-  is_virtual   boolean DEFAULT false,
-  is_private   boolean DEFAULT false,
-  is_live      boolean DEFAULT true,
+  _ver      text,
+  isVrt   boolean DEFAULT false,
+  isPrv   boolean DEFAULT false,
+  isLiv      boolean DEFAULT true,
   PRIMARY KEY (proxyid, userid)
 );
 
@@ -33,7 +33,7 @@ CREATE TRIGGER tablename_audit_proxy
 --
 CREATE TABLE IF NOT EXISTS
 tq_contents.merge_tuple_locators (
-  proxyid      locator NOT NULL references tq_contents.proxy(proxyid),
+  proxyid      locator NOT NULL references tq_contents.proxy(lox),
   mtlocator    locator, -- merge tuple locator: many locators can be
                         -- associated with a proxy
   PRIMARY KEY (proxyid, mtlocator)
@@ -47,7 +47,7 @@ GRANT SELECT ON tq_contents.merge_tuple_locators TO tq_proxy_ro;
 --
 CREATE TABLE IF NOT EXISTS
 tq_contents.superclasses (
-  proxyid      locator NOT NULL references tq_contents.proxy(proxyid),
+  proxyid      locator NOT NULL references tq_contents.proxy(lox),
   superclass   text  -- superclass locator
 );
 
@@ -66,7 +66,7 @@ CREATE TRIGGER tablename_audit_proxy_superclasses
 --
 CREATE TABLE IF NOT EXISTS
 tq_contents.psi (
-  proxyid      locator NOT NULL references tq_contents.proxy(proxyid),
+  proxyid      locator NOT NULL references tq_contents.proxy(lox),
   psi          text
 );
 CREATE INDEX IF NOT EXISTS psi_idx
@@ -87,7 +87,7 @@ CREATE TRIGGER tablename_audit_proxy_psi
 --
 CREATE TABLE IF NOT EXISTS
 tq_contents.properties (
-  proxyid      locator NOT NULL references tq_contents.proxy(proxyid),
+  proxyid      locator NOT NULL references tq_contents.proxy(lox),
   property_key text,
   property_val text
 );
@@ -109,8 +109,8 @@ CREATE TRIGGER tablename_audit_proxy_properties
 --
 CREATE TABLE IF NOT EXISTS
 tq_contents.transitive_closure (
-  proxyid       locator NOT NULL references tq_contents.proxy(proxyid),
-  property_type text
+  proxyid       locator NOT NULL references tq_contents.proxy(lox),
+  tc_lox text
 );
 CREATE INDEX IF NOT EXISTS transitive_closure_idx
   ON tq_contents.transitive_closure (proxyid, property_type);
