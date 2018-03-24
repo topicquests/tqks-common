@@ -45,7 +45,7 @@ SET ROLE tq_admin;
 --
 -- Create a locator type.
 --
-CREATE DOMAIN locator VARCHAR(50) NOT NULL;
+CREATE DOMAIN locator text NOT NULL;
 
 --
 -- Create the audit log table.
