@@ -12,9 +12,9 @@ tq_contents.proxy (
   node_type    text,
   url          text,
   _ver      text,
-  isVrt   boolean DEFAULT false,
-  isPrv   boolean DEFAULT false,
-  isLiv      boolean DEFAULT true,
+  "isVrt"   boolean DEFAULT false,
+  "isPrv"   boolean DEFAULT false,
+  "isLiv"      boolean DEFAULT true,
   PRIMARY KEY (lox, crtr)
 );
 
