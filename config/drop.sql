@@ -5,12 +5,14 @@ SET ROLE tq_admin;
 
 DROP SCHEMA tq_contents CASCADE;
 DROP SCHEMA tq_authentication CASCADE;
+DROP SCHEMA tq_tree CASCADE;
 DROP SCHEMA audit CASCADE;
 
 SET ROLE postgres;
 
 DROP EXTENSION hstore;
 DROP EXTENSION pgcrypto;
+DROP EXTENSION ltree;
 
 \c postgres
 
@@ -26,6 +28,8 @@ DROP ROLE tq_users;    -- full access to user information
 DROP ROLE tq_users_ro; -- read-only access user information
 DROP ROLE tq_proxy;    -- full access to proxy information
 DROP ROLE tq_proxy_ro; -- read-only access to proxy information
+DROP ROLE tq_conv;     -- full access to conversation tree information
+DROP ROLE tq_conv_ro;  -- read-only access to conversation tree information
 
 -- DROP TABLESPACE tq_space;
 
