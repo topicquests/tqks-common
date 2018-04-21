@@ -10,17 +10,18 @@ COMMENT ON SCHEMA tq_tree IS 'Tables to store the conversation tree.';
 
 -- Install the ltree extension.
 SET ROLE postgres;
-CREATE EXTENSION IF NOT EXISTS ltree WITH SCHEMA tq_tree;
+CREATE EXTENSION IF NOT EXISTS ltree;
 
 SET ROLE tq_admin;
 
 CREATE TABLE IF NOT EXISTS
 tq_tree.conv (
     id          bigserial primary key,
-    context     locator,
-    lox         locator,
+    context     locator NOT NULL,
+    lox         locator NOT NULL,
     parent_lox  locator,
-    parent_path tq_tree.ltree
+    parent_path public.ltree,
+    UNIQUE (context, lox)
 );
 CREATE INDEX IF NOT EXISTS conv_path_idx
   ON tq_tree.conv USING gist(parent_path);
@@ -42,12 +43,12 @@ GRANT SELECT ON tq_tree.conv_id_seq TO tq_conv_ro;
 --
 CREATE OR REPLACE FUNCTION tq_tree.update_conv_parent_path() RETURNS TRIGGER AS $$
 DECLARE
-   path    tq_tree.ltree;
+   path    public.ltree;
    rootstr text;
 BEGIN
    IF NEW.parent_lox = '' THEN
       rootstr = 'root' || NEW.id;
-      NEW.parent_path = CAST (rootstr AS tq_tree.ltree);
+      NEW.parent_path = CAST (rootstr AS public.ltree);
    ELSEIF TG_OP = 'INSERT' OR OLD.parent_lox IS NULL OR OLD.parent_lox != NEW.parent_lox THEN
       SELECT parent_path || '.' || NEW.id::text FROM tq_tree.conv
          WHERE lox = NEW.parent_lox AND context = NEW.context INTO path;
@@ -63,6 +64,14 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER parent_path_tgr
    BEFORE INSERT OR UPDATE ON tq_tree.conv
    FOR EACH ROW EXECUTE PROCEDURE tq_tree.update_conv_parent_path();
+
+--
+-- Create function to return ancestor locators.
+--
+CREATE FUNCTION tq_tree.getAncestors(ctx locator, loc locator) RETURNS SETOF locator AS $$
+       SELECT lox FROM tq_tree.conv WHERE parent_path OPERATOR(public.@>)
+       (SELECT parent_path FROM tq_tree.conv WHERE lox = loc AND context = ctx);
+$$ LANGUAGE SQL;
     
 --
 -- Create audit record for conversation tree changes.
