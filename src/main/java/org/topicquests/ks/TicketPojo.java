@@ -20,8 +20,10 @@ import java.util.*;
 import org.topicquests.ks.api.ITQCoreOntology;
 import org.topicquests.ks.api.ITicket;
 
+import net.minidev.json.JSONObject;
+
 public class TicketPojo implements ITicket {
-  private Map<String,Object>data;
+  private JSONObject data;
   private final String
   MEMBER_KEY		= "memberlist",
     AVATAR_KEY		= "avatarlist",
@@ -34,11 +36,11 @@ public class TicketPojo implements ITicket {
     ACTIVE_KEY          = "active";
 
   public TicketPojo() {
-    data = new HashMap<String,Object>();
+    data = new JSONObject();
   }
 	
   public TicketPojo(String userLocator) {
-    data = new HashMap<String,Object>();
+    data = new JSONObject();
     setUserLocator(userLocator);
   }
 
@@ -55,7 +57,7 @@ public class TicketPojo implements ITicket {
   public TicketPojo(String userLocator, String email, String password,
                     String handle, String first_name, String last_name,
                     String language) {
-    data = new HashMap<String,Object>();
+    data = new JSONObject();
     setUserLocator(userLocator);
     setEmail(email);
     setHandle(handle);
@@ -226,8 +228,16 @@ public class TicketPojo implements ITicket {
     return data.get(key);
   }
 
-	public Map<String, Object> getData() {
-		return data;
+
+	@Override
+	public JSONObject getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String toJSONString() {
+		return data.toJSONString();
 	}
 
 }

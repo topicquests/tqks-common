@@ -66,13 +66,13 @@ CREATE TRIGGER encrypt_password
 
 -- Validate a password for a given handle. Return the user ID if valid.
 CREATE OR REPLACE FUNCTION
-tq_authentication.user_locator(handle text, password text) returns name
+tq_authentication.user_locator(email text, password text) returns name
   LANGUAGE plpgsql
   AS $$
 BEGIN
   RETURN (
   SELECT userid FROM tq_authentication.users
-   WHERE users.handle = user_locator.handle
+   WHERE users.email = user_locator.email
      AND users.password = crypt(user_locator.password, users.password)
   );
 END;

@@ -17,6 +17,8 @@ package org.topicquests.ks.api;
 
 import java.util.*;
 
+import net.minidev.json.JSONObject;
+
 public interface ITicket {
 	
   /**
@@ -97,8 +99,9 @@ public interface ITicket {
   List<String> listAvatars();
 	
   /**
-   * Some groups or documents may have ACLs which grant
-   * a group identity
+   * <p>Some groups or documents may have ACLs which grant
+   * a group identity.</p>
+   * <p>Group locators are the same as <em>Roles</em>
    * @param groupLocator
    */
   void addGroupLocator(String groupLocator);
@@ -124,5 +127,7 @@ public interface ITicket {
    */
   boolean isMember(String groupLocator);
 
-  Map<String,Object> getData();
+  JSONObject getData();
+  
+  String toJSONString();
 }
