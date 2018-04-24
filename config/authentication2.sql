@@ -42,6 +42,9 @@ tq_authentication.user_properties (
 CREATE INDEX IF NOT EXISTS props_idx
   ON tq_authentication.user_properties (userid);
 
+GRANT ALL PRIVILEGES ON tq_authentication.user_properties TO tq_users;
+GRANT SELECT ON tq_authentication.user_properties TO tq_users_ro;
+
 -- Encrypt the password for in inserted user.
 CREATE OR REPLACE FUNCTION
 tq_authentication.encrypt_password() returns trigger
