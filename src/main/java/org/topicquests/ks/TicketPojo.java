@@ -25,7 +25,7 @@ import net.minidev.json.JSONObject;
 public class TicketPojo implements ITicket {
   private JSONObject data;
   private final String
-  MEMBER_KEY		= "memberlist",
+  	ROLE_KEY		= "roleList",
     AVATAR_KEY		= "avatarlist",
     LOCATOR_KEY		= "locator",
     HANDLE_KEY		= "handle",
@@ -33,6 +33,7 @@ public class TicketPojo implements ITicket {
     LANGUAGE_KEY        = "language",
     FIRST_NAME_KEY      = "firstName",
     LAST_NAME_KEY       = "lastName",
+    FULL_NAME_KEY		= "fullName",
     ACTIVE_KEY          = "active";
 
   public TicketPojo() {
@@ -155,7 +156,7 @@ public class TicketPojo implements ITicket {
     }
     if (!l.contains(avatar))
       l.add(avatar);
-
+    data.put(AVATAR_KEY, l);
   }
 
   /* (non-Javadoc)
@@ -173,22 +174,23 @@ public class TicketPojo implements ITicket {
    * @see org.topicquests.model.api.ITicket#addGroupLocator(java.lang.String)
    */
   @Override
-  public void addGroupLocator(String groupLocator) {
-    List<String>l = (List<String>)data.get(MEMBER_KEY);
+  public void addRole(String role) {
+    List<String>l = (List<String>)data.get(ROLE_KEY);
     if (l == null) {
       l = new ArrayList<String>();
-      data.put(MEMBER_KEY, l);
+      data.put(ROLE_KEY, l);
     }
-    if (!l.contains(groupLocator))
-      l.add(groupLocator);
+    if (!l.contains(role))
+      l.add(role);
+    data.put(ROLE_KEY, l);
   }
 
   /* (non-Javadoc)
    * @see org.topicquests.model.api.ITicket#listGroupLocators()
    */
   @Override
-  public List<String> listGroupLocators() {
-    List<String>l = (List<String>)data.get(MEMBER_KEY);
+  public List<String> listRoles() {
+    List<String>l = (List<String>)data.get(ROLE_KEY);
     if (l == null)
       l = new ArrayList<String>();
     return l;
@@ -207,9 +209,9 @@ public class TicketPojo implements ITicket {
    * @see org.topicquests.model.api.ITicket#isMember(java.lang.String)
    */
   @Override
-  public boolean isMember(String groupLocator) {
-    List<String>l = listGroupLocators();
-    return l.contains(groupLocator);
+  public boolean hasRole(String role) {
+    List<String>l = listRoles();
+    return l.contains(role);
   }
 
   /* (non-Javadoc)
@@ -231,13 +233,22 @@ public class TicketPojo implements ITicket {
 
 	@Override
 	public JSONObject getData() {
-		// TODO Auto-generated method stub
-		return null;
+		return data;
 	}
 
 	@Override
 	public String toJSONString() {
 		return data.toJSONString();
+	}
+
+	@Override
+	public void setFullName(String fullName) {
+		data.put(FULL_NAME_KEY, fullName);
+	}
+
+	@Override
+	public String getFullName() {
+		return data.getAsString(FULL_NAME_KEY);
 	}
 
 }

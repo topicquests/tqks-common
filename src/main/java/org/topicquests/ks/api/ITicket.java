@@ -69,6 +69,9 @@ public interface ITicket {
   void setLastName(String lastName);
   String getLastName();
   
+  void setFullName(String fullName);
+  String getFullName();
+  
   /**
    * <code>language</code> is the primary language used
    * by the  user
@@ -104,13 +107,13 @@ public interface ITicket {
    * <p>Group locators are the same as <em>Roles</em>
    * @param groupLocator
    */
-  void addGroupLocator(String groupLocator);
+  void addRole(String role);
 	
   /**
    * Return a list of group locators
    * @return does not return <code>null</code>
    */
-  List<String> listGroupLocators();
+  List<String> listRoles();
 	
   /**
    * Will return <code>true</code> if <code>userlocator</code> is
@@ -122,10 +125,10 @@ public interface ITicket {
   /**
    * Will return <code>true</code> if this user is a has
    * <code>groupLocator</code> in the member list
-   * @param groupLocator
+   * @param role
    * @return
    */
-  boolean isMember(String groupLocator);
+  boolean hasRole(String role);
 
   JSONObject getData();
   
