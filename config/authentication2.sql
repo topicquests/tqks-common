@@ -73,7 +73,7 @@ BEGIN
   RETURN (
   SELECT userid FROM tq_authentication.users
    WHERE users.email = user_locator.email
-     AND users.password = crypt(user_locator.password, users.password)
+     AND users.password = tq_authentication.crypt(user_locator.password, users.password)
   );
 END;
 $$;
