@@ -57,7 +57,7 @@ CREATE DOMAIN locator text NOT NULL;
 --
 -- Create the user tables.
 --
-\i authentication2.sql
+\i authentication.sql
 
 --
 -- Create the tables for the proxies.

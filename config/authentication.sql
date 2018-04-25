@@ -19,8 +19,7 @@ tq_authentication.users (
   email        text UNIQUE NOT NULL check ( email ~* '^.+@.+\..+$' ),
   password     varchar(512) NOT NULL,
   handle       varchar(32) UNIQUE NOT NULL,
-  first_name   text,
-  last_name    text,
+  full_name    text,
   language     text DEFAULT 'en' check (length(language) = 2),
   active       boolean default true,  -- true = active user
   PRIMARY KEY(userid, handle)
@@ -33,6 +32,19 @@ GRANT SELECT ON tq_authentication.users TO tq_users_ro;
 CREATE INDEX IF NOT EXISTS users_idx
   ON tq_authentication.users (email);
 
+CREATE TABLE IF NOT EXISTS
+tq_authentication.user_properties (
+  userid        LOCATOR NOT NULL references tq_authentication.users(userid),
+  property_key  text,
+  property_val  text
+);
+
+CREATE INDEX IF NOT EXISTS props_idx
+  ON tq_authentication.user_properties (userid);
+
+GRANT ALL PRIVILEGES ON tq_authentication.user_properties TO tq_users;
+GRANT SELECT ON tq_authentication.user_properties TO tq_users_ro;
+
 -- Encrypt the password for in inserted user.
 CREATE OR REPLACE FUNCTION
 tq_authentication.encrypt_password() returns trigger
@@ -40,7 +52,7 @@ tq_authentication.encrypt_password() returns trigger
   as $$
 begin
   if tg_op = 'INSERT' or new.password <> old.password then
-    new.password = tq_authentication.crypt(new.password, tq_authentication.gen_salt('bf'));
+    new.password = tq_authentication.crypt(new.password, tq_authentication.gen_salt('md5'));
   end if;
   return new;
 end
@@ -54,14 +66,14 @@ CREATE TRIGGER encrypt_password
 
 -- Validate a password for a given handle. Return the user ID if valid.
 CREATE OR REPLACE FUNCTION
-tq_authentication.user_locator(handle text, password text) returns name
+tq_authentication.user_locator(email text, password text) returns name
   LANGUAGE plpgsql
   AS $$
 BEGIN
   RETURN (
   SELECT userid FROM tq_authentication.users
-   WHERE users.handle = user_locator.handle
-     AND users.password = crypt(user_locator.password, users.password)
+   WHERE users.email = user_locator.email
+     AND users.password = tq_authentication.crypt(user_locator.password, users.password)
   );
 END;
 $$;
