@@ -19,6 +19,11 @@ DROP EXTENSION ltree;
 -- Switch to the tq_admin user to drop the database for TQ objects.
 SET ROLE tq_admin;
 
+SELECT pg_terminate_backend(pg_stat_activity.pid)
+FROM pg_stat_activity
+WHERE pg_stat_activity.datname = 'tq_database'
+  AND pid <> pg_backend_pid();
+
 DROP DATABASE tq_database;
 
 SET ROLE postgres;
