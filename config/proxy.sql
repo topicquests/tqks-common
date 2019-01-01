@@ -1,3 +1,9 @@
+-- Install the zombodb extension.
+SET ROLE postgres;
+CREATE EXTENSION IF NOT EXISTS zombodb;
+
+SET ROLE tq_admin;
+
 --
 -- Create a schema to hide the proxy tables from public view.
 --
@@ -67,10 +73,14 @@ CREATE TRIGGER tablename_audit_proxy_superclasses
 CREATE TABLE IF NOT EXISTS
 tq_contents.psi (
   proxyid      locator NOT NULL references tq_contents.proxy(lox),
-  psi          text
+  psi          zdb.fulltext
 );
+-- CREATE INDEX IF NOT EXISTS psi_idx
+--   ON tq_contents.psi (proxyid, psi);
 CREATE INDEX IF NOT EXISTS psi_idx
-  ON tq_contents.psi (proxyid, psi);
+  ON tq_contents.psi
+  USING zombodb ((tq_contents.psi.*))
+  WITH (url='http://localhost:9200/');
 
 GRANT ALL PRIVILEGES ON tq_contents.psi TO tq_proxy;
 GRANT SELECT ON tq_contents.psi TO tq_proxy_ro;
@@ -89,10 +99,14 @@ CREATE TABLE IF NOT EXISTS
 tq_contents.properties (
   proxyid      locator NOT NULL references tq_contents.proxy(lox),
   property_key text,
-  property_val text
+  property_val zdb.fulltext
 );
+-- CREATE INDEX IF NOT EXISTS properties_idx
+--   ON tq_contents.properties (proxyid, property_key);
 CREATE INDEX IF NOT EXISTS properties_idx
-  ON tq_contents.properties (proxyid, property_key);
+  ON tq_contents.properties
+  USING zombodb ((tq_contents.properties.*))
+  WITH (url='http://localhost:9200/');
 
 GRANT ALL PRIVILEGES ON tq_contents.properties TO tq_proxy;
 GRANT SELECT ON tq_contents.properties TO tq_proxy_ro;
@@ -110,10 +124,14 @@ CREATE TRIGGER tablename_audit_proxy_properties
 CREATE TABLE IF NOT EXISTS
 tq_contents.transitive_closure (
   proxyid       locator NOT NULL references tq_contents.proxy(lox),
-  tc_lox text
+  tc_lox zdb.fulltext
 );
+-- CREATE INDEX IF NOT EXISTS transitive_closure_idx
+--   ON tq_contents.transitive_closure (proxyid, tc_lox);
 CREATE INDEX IF NOT EXISTS transitive_closure_idx
-  ON tq_contents.transitive_closure (proxyid, tc_lox);
+  ON tq_contents.transitive_closure
+  USING zombodb ((tq_contents.transitive_closure.*))
+  WITH (url='http://localhost:9200/');
 
 GRANT ALL PRIVILEGES ON tq_contents.transitive_closure TO tq_proxy;
 GRANT SELECT ON tq_contents.transitive_closure TO tq_proxy_ro;
@@ -131,10 +149,14 @@ CREATE TRIGGER tablename_audit_proxy_transitive_closure
 CREATE TABLE IF NOT EXISTS
 tq_contents.acls (
   proxyid       locator NOT NULL references tq_contents.proxy(lox),
-  acl           text
+  acl           zdb.fulltext
 );
+-- CREATE INDEX IF NOT EXISTS acls_idx
+--   ON tq_contents.acls (proxyid, acl);
 CREATE INDEX IF NOT EXISTS acls_idx
-  ON tq_contents.acls (proxyid, acl);
+  ON tq_contents.acls
+  USING zombodb ((tq_contents.acls.*))
+  WITH (url='http://localhost:9200/');
 
 GRANT ALL PRIVILEGES ON tq_contents.acls TO tq_proxy;
 GRANT SELECT ON tq_contents.acls TO tq_proxy_ro;

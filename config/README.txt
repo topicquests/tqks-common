@@ -2,24 +2,29 @@ PostgreSQL database configuration
 ---------------------------------
 Install the repository RPM:
 
-yum install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-1.noarch.rpm
+  yum install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-1.noarch.rpm
 
 Install the client packages:
 
-yum install postgresql10
+  yum install postgresql10
 
 Optionally install the server packages:
 
-yum install postgresql10-server
+  yum install postgresql10-server
 
 Optionally initialize the database and enable automatic start:
 
-/usr/pgsql-10/bin/postgresql-10-setup initdb
-systemctl enable postgresql-10
-systemctl start postgresql-10
+  /usr/pgsql-10/bin/postgresql-10-setup initdb
+  systemctl enable postgresql-10
+  systemctl start postgresql-10
 
-yum -y install postgresql10-contrib
+  yum -y install postgresql10-contrib
 
+Install Zombodb:
+Download the proper .rpm package for your CentOS/RHEL distro from
+https://www.zombodb.com/releases, and run:
+
+  sudo rpm -Uvh zombodb_centos7_pg10-10-1.0.0_1.x86_64.rpm
 
 
 How to set up a PostgreSQL database for topic maps
