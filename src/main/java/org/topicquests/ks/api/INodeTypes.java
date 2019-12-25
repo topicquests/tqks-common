@@ -50,7 +50,8 @@ public interface INodeTypes {
 	 	SUMMARY_TYPE			= "SummaryNodeType",
 	 	PERSPECTIVE_TYPE		= "PerspectiveNodeType",
 	 	BOOKMARK_TYPE			= "BookmarkNodeType",
-	 	ANNOTATION_TYPE			= "AnnotationType";
+	 	ANNOTATION_TYPE			= "AnnotationType",
+	 	JOURNAL_TYPE			= "JournalNodeType";
 		
 	
 }
